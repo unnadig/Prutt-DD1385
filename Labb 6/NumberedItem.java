@@ -1,4 +1,4 @@
-class NumberedItem<T> {
+class NumberedItem<T> implements Comparable<NumberedItem<T>>{
     private int index;
     private T t;
 
@@ -11,26 +11,25 @@ class NumberedItem<T> {
         
         this.t = t;
     }
-
+    @Override
     public int compareTo(NumberedItem<T> i) {
         return getIndex() - i.getIndex();
     }
 
-    public boolean equals(NumberedItem<T> i) {
-        //if (i == null) { return false; }
-        try {        
-            if (getIndex() == i.getIndex()) {
-                return true;
-            } else if (getT() == i.getT()) {
+    @Override
+    public boolean equals(Object object) {
+
+        if (!(object instanceof NumberedItem<?>)) {
+            return false;
+        } else {
+            NumberedItem<T> n = (NumberedItem<T>) object;
+        
+            if ((getIndex() == n.getIndex()) || (getT() == n.getT())) {
                 return true;
             } else {
                 return false;
             }
-        } catch (NullPointerException e) {
-            System.out.println("NullPointerException thrown!");
-            return false;
         }
-
     }
 
     public String toString() {
