@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeMap;
@@ -98,14 +99,18 @@ class ComparableElemVecMap<E extends Comparable<E>> extends TreeMap<Integer,E> i
 	}
 
 	public List<E> sortedValues() {
-		// use entrySet()?
-		ArrayList<E> elemArrayList = new ArrayList<E>();
-		Set<Integer> keySet = keySet();
-		for (Integer key : keySet) {
-			elemArrayList.add(get(key));
+		Object[] elemArray = toArray();
+		ArrayList<E> elemList = new ArrayList<>();
+		for (int i = 0; i < elemArray.length; i++) {
+			E elem = (E) elemArray[i];
+			
+			if (elem != null) {
+			elemList.add(elem);
+			}
 		}
 
-		return elemArrayList;
+		Collections.sort(elemList);
+		return elemList;
 	}
 
 	public String toString() {

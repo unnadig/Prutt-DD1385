@@ -7,6 +7,7 @@ public class SparseVectorStringTest {
         vec.add("Flaska");
         vec.add("Tallrik");
         vec.add("Stol");
+        vec.add(9, "Last entry");
         vec.add("Högtalare");
         System.out.println("toString() test:--------------------------------------");
         System.out.println(vec);

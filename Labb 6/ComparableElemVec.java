@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeMap;
@@ -10,7 +13,7 @@ class ComparableElemVec<E extends Comparable<E>> implements SparseVec<E> {
 		this.treeMap = new TreeMap<Integer, E>();
 	}
 
-	@Override
+	//@Override
 	public void add(E elem) {
 		int prevKey = minIndex();
 		if ((prevKey > 0) || (prevKey == -1)) {
@@ -27,7 +30,7 @@ class ComparableElemVec<E extends Comparable<E>> implements SparseVec<E> {
 		}
 	}
 
-	@Override
+	//@Override
 	public void add(int pos, E elem) {
 		int posVar = pos;
 		if (posVar < 0) {
@@ -37,7 +40,7 @@ class ComparableElemVec<E extends Comparable<E>> implements SparseVec<E> {
 		treeMap.put(posVar, elem);
 	}
 
-	@Override
+	//@Override
 	public int indexOf(E elem) {
 		// use entrySet()?
 		Set<Integer> keySet = treeMap.keySet();
@@ -50,12 +53,12 @@ class ComparableElemVec<E extends Comparable<E>> implements SparseVec<E> {
 		return -1;
 	}
 
-	@Override
+	//@Override
 	public void removeAt(int pos) {
 		treeMap.remove(pos);
 	}
 
-	@Override
+	//@Override
 	public void removeElem(E elem) {
 		// use entrySet()?
 		Set<Integer> keySet = treeMap.keySet();
@@ -68,12 +71,12 @@ class ComparableElemVec<E extends Comparable<E>> implements SparseVec<E> {
 		return;
 	}
 
-	@Override
+	//@Override
 	public int size() {
 		return treeMap.size();
 	}
 
-	@Override
+	//@Override
 	public int minIndex() {
 		if(size() == 0) {
 			return -1;
@@ -82,7 +85,7 @@ class ComparableElemVec<E extends Comparable<E>> implements SparseVec<E> {
 		}
 	}
 
-	@Override
+	//@Override
 	public int maxIndex() {
 		if (size() == 0) {
 			return -1;
@@ -91,14 +94,13 @@ class ComparableElemVec<E extends Comparable<E>> implements SparseVec<E> {
 		}
 	}
 
-	@Override
+	//@Override
 	public E get(int pos) {
 		return treeMap.get(pos);
 	}
 
-	@Override
+	//@Override
 	public Object[] toArray() {
-		// use entrySet()?
 		Object[] elemArray = new Object[maxIndex()+1];
 		Set<Integer> keySet = treeMap.keySet();
 		for (Integer key : keySet) {
@@ -108,21 +110,25 @@ class ComparableElemVec<E extends Comparable<E>> implements SparseVec<E> {
 		return elemArray;
 	}
 
-	@Override
+	//@Override
 	public List<E> sortedValues() {
-		// use entrySet()?
-		ArrayList<E> elemArrayList = new ArrayList<E>();
-		Set<Integer> keySet = treeMap.keySet();
-		for (Integer key : keySet) {
-			elemArrayList.add(get(key));
+		Object[] elemArray = toArray();
+		ArrayList<E> elemList = new ArrayList<>();
+		for (int i = 0; i < elemArray.length; i++) {
+			E elem = (E) elemArray[i];
+
+			if (elem != null) {
+			elemList.add(elem);
+			}
 		}
 
-		return elemArrayList;
+		Collections.sort(elemList);
+		return elemList;
+
 	}
 
-	@Override
+	//@Override
 	public String toString() {
-		// use entrySet()?
 		StringBuilder sb = new StringBuilder();
 		Set<Integer> keySet = treeMap.keySet();
 		for (Integer key : keySet) {
