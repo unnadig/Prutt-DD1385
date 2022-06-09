@@ -3,6 +3,7 @@ public class Particle {
     private double x;
     private double y;
     private boolean isMoveable;
+    private final double L = 0.01;
 
     public Particle(double x, double y, boolean isMoveable) {
         // make sure x,y,b valid?
@@ -21,10 +22,17 @@ public class Particle {
         if ( !this.isMoveable ) {
             return;
         }
-        // make L final?
-        double L = 0.01;
+
         double phi = Math.random()*2*Math.PI;
         this.x += L*Math.cos(phi);
         this.y += L*Math.sin(phi);
+    }
+    
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
     }
 }
