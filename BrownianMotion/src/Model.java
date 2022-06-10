@@ -18,7 +18,6 @@ public class Model {
             try {
                 particleArray[i] = new Particle(x, y, true);
             } catch (Exception e) {
-                //TODO: handle exception
                 particleArray[i] = new Particle(0.5, 0.5, true);
                 System.out.println(e.getMessage()+" Coordinates have been set to default.");
             }
