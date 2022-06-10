@@ -1,6 +1,6 @@
 import java.awt.Dimension;
-import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -12,14 +12,17 @@ public class View {
     private JButton startButton;
     private JSlider delaySlider;
     private PaintPanel paintPanel;
-    private int width = 800;
-    private int height = 600;
-    private int radius = 4;
+    public static final int PANEL_WIDTH = 1000;
+    public static final int PANEL_HEIGHT = 600;
+    public static final int PARTICLE_RADIUS = 4;
+    public static final Color BG_COLOR = Color.blue;
+    public static final Color STUCK_COLOR = Color.red;
+    public static final Color MOVE_COLOR = Color.black;
 
     public View(Model model) {
         this.model = model;
 
-        // Create button
+        // Create button and slider
         startButton = new JButton("Start");
         delaySlider = new JSlider();
         
@@ -29,7 +32,7 @@ public class View {
         controlPanel.add(delaySlider);
 
         paintPanel = new PaintPanel();
-        paintPanel.setPreferredSize(new Dimension(width, height));
+        paintPanel.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
         //paintPanel.setBackground(Color.blue);
         paintPanel.setOpaque(false);
 
@@ -45,7 +48,7 @@ public class View {
         frame.setVisible(true);
     }
     
-    class PaintPanel extends JPanel {
+    public class PaintPanel extends JPanel {
         PaintPanel() {
             super();
         }
@@ -53,21 +56,39 @@ public class View {
         public void paint(Graphics g) {
             /*
             */
-             
-            g.setColor(Color.black);
-            g.drawRect(1, 1, width-1, height-1);
-            g.setColor(Color.blue);
-            g.fillRect(1, 1, width-1, height-1);
             
-            g.setColor(Color.red);
+            // Paint background and border
+            g.setColor(BG_COLOR);
+            g.fillRect(0, 0, PANEL_WIDTH, PANEL_HEIGHT);
+            g.setColor(STUCK_COLOR);
+            g.drawRect(0, 0, PANEL_WIDTH-1, PANEL_HEIGHT-1);
+            
+            // Paint particles
             Model.Particle[] particleArray = model.getParticleArray();
             for (int i = 0; i < particleArray.length; i++) {
-                double x = width*particleArray[i].getX();
-                double y = height*particleArray[i].getY();
+                Model.Particle particle = particleArray[i];
+                double x = PANEL_WIDTH*particle.getX();
+                double y = PANEL_HEIGHT*particle.getY();
                 
-                g.fillOval((int) x, (int) y, radius, radius);
+                // Stuck particles are moved inside the border
+                if (!particle.isMovable()) {
+                    if (x == PANEL_WIDTH) {
+                        x -= PARTICLE_RADIUS;
+                    } else if (y == PANEL_HEIGHT) {
+                        y -= PARTICLE_RADIUS;
+                    }
+
+                    g.setColor(STUCK_COLOR);
+                } else {
+                    g.setColor(MOVE_COLOR);
+                }
+
+                g.fillOval((int) x, (int) y, PARTICLE_RADIUS, PARTICLE_RADIUS);
+            
             }
+
         }
+
     }
 
     public JButton getStartButton() {
@@ -81,4 +102,5 @@ public class View {
     public PaintPanel getPaintPanel() {
         return paintPanel;
     }
+
 }

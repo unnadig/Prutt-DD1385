@@ -1,22 +1,23 @@
 import java.util.Random;
 
 public class Model {
-    private int particleNum = 4000;
     private Particle[] particleArray;
-    private static final double L = 0.01;
+    public static final int PARTICLE_NUMBER = 4000;
+    public static final double STEP_LENGTH = 0.01;
 
     Model() {
-        particleArray = new Particle[particleNum];
+        particleArray = new Particle[PARTICLE_NUMBER];
         for (int i = 0; i < particleArray.length; i++) {
             particleArray[i] = new Particle();
         }
+
     }
 
     public void updateState() {
         for (Particle particle : particleArray) {
-            particle.move(L);
-
+            particle.move(STEP_LENGTH);
         }
+
     }
     
     public Particle[] getParticleArray() {
@@ -24,10 +25,11 @@ public class Model {
     }
 
     public class Particle {
+        // Coordinates x and y assume values between 0 and 1
         private double x;
         private double y;
         private boolean isMovable;
-    
+
         public Particle(double x, double y, boolean isMovable) {
             this.x = x;
             this.y = y;
@@ -38,25 +40,40 @@ public class Model {
             // Initialize coordinates from Gaussian
             Random rx = new Random();
             Random ry = new Random();
-            x = 0.5 + rx.nextGaussian()/100;
-            y = 0.5 + ry.nextGaussian()/100;
+            x = 0.5 + rx.nextGaussian()/10;
+            y = 0.5 + ry.nextGaussian()/10;
             isMovable = true;
         }
     
         public void move(double L) {
-            if ( !this.isMovable ) {
+            if ( !isMovable ) {
                 return;
             }
 
             double phi = Math.random()*2*Math.PI;
             x += L*Math.cos(phi);
             y += L*Math.sin(phi);
+
+            if (isAtBoundary()) {
+                isMovable = false;
+                stickAtBoundary();
+            }
+
         }
 
         public boolean isAtBoundary() {
-            return true;
+            return ((x < 0) || (x > 1) || (y < 0) || (y > 1));
         }
-        
+
+        public void stickAtBoundary() {
+            if ((x < 0) || (x > 1)) {
+                x = Math.round(x);
+            } else if ((y < 0) || ( y > 1)) {
+                y = Math.round(y);               
+            }
+
+        }
+
         public double getX() {
             return x;
         }
@@ -68,5 +85,7 @@ public class Model {
         public boolean isMovable() {
             return isMovable;
         }
+        
     }
+    
 }

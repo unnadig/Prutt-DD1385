@@ -1,7 +1,5 @@
 import java.awt.event.ActionListener;
-import java.util.Dictionary;
 import java.awt.event.ActionEvent;
-
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.JButton;
@@ -12,26 +10,25 @@ import javax.swing.Timer;
 public class Controller {
     private Model model;
     private View view;
-    private int delay;
     public static final int DELAY_MIN = 1;
-    public static final int DELAY_MAX = 80;
-    public static final int DELAY_INIT= 40;
+    public static final int DELAY_MAX = 40;
+    public static final int DELAY_INIT= 20;
 
     public Controller(Model m, View v) {
         model = m;
-        view = v;
-        
+        view = v; 
     }
 
     public void initController() {
+        
         // Update position and redraw
-        delay = 10;
-        Timer timer = new Timer(delay, new ActionListener() {
+        Timer timer = new Timer(DELAY_INIT, new ActionListener() {
             
             public void actionPerformed(ActionEvent ae) {
                 model.updateState();
                 view.getPaintPanel().repaint();
             }
+
         });
 
         // Button for starting and stopping animation
@@ -49,8 +46,9 @@ public class Controller {
                     startButton.setText("Start");
                     timer.stop();                    
                 }
+
             }
-            
+
         });
 
         // Slider for changing animation speed
