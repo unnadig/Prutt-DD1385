@@ -12,7 +12,7 @@ public class Model {
             // Initialize coordinates from Gaussian
             Random rx = new Random();
             Random ry = new Random();
-            double x = 0.7 + rx.nextGaussian()/10;
+            double x = 0.5 + rx.nextGaussian()/10;
             double y = 0.5 + ry.nextGaussian()/10;
             
             try {
