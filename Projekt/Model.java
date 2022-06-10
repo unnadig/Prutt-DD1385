@@ -5,7 +5,7 @@ public class Model {
     public static final int PARTICLE_NUMBER = 4000;
     public static final double STEP_LENGTH = 0.01;
 
-    Model() {
+    public Model() {
         particleArray = new Particle[PARTICLE_NUMBER];
         for (int i = 0; i < particleArray.length; i++) {
             particleArray[i] = new Particle();
@@ -40,6 +40,7 @@ public class Model {
             // Initialize coordinates from Gaussian
             Random rx = new Random();
             Random ry = new Random();
+            // överlagra konstruktor
             x = 0.5 + rx.nextGaussian()/10;
             y = 0.5 + ry.nextGaussian()/10;
             isMovable = true;

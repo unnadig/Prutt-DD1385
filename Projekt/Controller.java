@@ -24,7 +24,7 @@ public class Controller {
         // Update position and redraw
         Timer timer = new Timer(DELAY_INIT, new ActionListener() {
             
-            public void actionPerformed(ActionEvent ae) {
+            public void actionPerformed(ActionEvent ae) { //lambda
                 model.updateState();
                 view.getPaintPanel().repaint();
             }
@@ -32,6 +32,7 @@ public class Controller {
         });
 
         // Button for starting and stopping animation
+        
         JButton startButton = view.getStartButton();    // View.Object inside Controller, ok or not?
         startButton.addActionListener(new ActionListener() {
             

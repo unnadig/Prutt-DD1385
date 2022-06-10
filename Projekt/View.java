@@ -21,7 +21,10 @@ public class View {
 
     public View(Model model) {
         this.model = model;
+        initView();
+    }
 
+    public void initView() {
         // Create button and slider
         startButton = new JButton("Start");
         delaySlider = new JSlider();
@@ -48,15 +51,13 @@ public class View {
         frame.setVisible(true);
     }
     
-    public class PaintPanel extends JPanel {
+    private class PaintPanel extends JPanel {
         PaintPanel() {
             super();
         }
 
         public void paint(Graphics g) {
-            /*
-            */
-            
+
             // Paint background and border
             g.setColor(BG_COLOR);
             g.fillRect(0, 0, PANEL_WIDTH, PANEL_HEIGHT);
@@ -70,7 +71,7 @@ public class View {
                 double x = PANEL_WIDTH*particle.getX();
                 double y = PANEL_HEIGHT*particle.getY();
                 
-                // Stuck particles are moved inside the border
+                // Stuck particles are painted inside the border
                 if (!particle.isMovable()) {
                     if (x == PANEL_WIDTH) {
                         x -= PARTICLE_RADIUS;

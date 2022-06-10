@@ -16,7 +16,7 @@ public class BrownianMotionDemo {
 
     public static void createAndShowGUI() {
         Model m = new Model();
-        View v = new View(m);
+        View v = new View(m);   //GUI och main thread
         Controller c = new Controller(m, v);
         c.initController();
     
