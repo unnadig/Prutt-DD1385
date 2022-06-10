@@ -1,18 +1,22 @@
+import java.util.Random;
+
 public class Model {
-    private int particleNum;
+    private int particleNum = 4000;
     private Particle[] particleArray;
-    private double L = 0.01;
+    private static final double L = 0.01;
 
     Model() {
-        particleNum = 1;
         particleArray = new Particle[particleNum];
         for (int i = 0; i < particleArray.length; i++) {
             particleArray[i] = new Particle();
         }
     }
 
-    void updateState() {
-        particle.move();
+    public void updateState() {
+        for (Particle particle : particleArray) {
+            particle.move(L);
+
+        }
     }
     
     public Particle[] getParticleArray() {
@@ -20,32 +24,37 @@ public class Model {
     }
 
     public class Particle {
-        // x,y are doubles between 0 and 1.
         private double x;
         private double y;
-        private boolean isMoveable;
+        private boolean isMovable;
     
-        public Particle(double x, double y, boolean isMoveable) {
-            // make sure x,y,b valid?
+        public Particle(double x, double y, boolean isMovable) {
             this.x = x;
             this.y = y;
-            this.isMoveable = isMoveable;
+            this.isMovable = isMovable;
         }
     
         public Particle() {
-            this.x = Math.random(); 
-            this.y = Math.random();
-            this.isMoveable = true;
+            // Initialize coordinates from Gaussian
+            Random rx = new Random();
+            Random ry = new Random();
+            x = 0.5 + rx.nextGaussian()/100;
+            y = 0.5 + ry.nextGaussian()/100;
+            isMovable = true;
         }
     
         public void move(double L) {
-            if ( !this.isMoveable ) {
+            if ( !this.isMovable ) {
                 return;
             }
 
             double phi = Math.random()*2*Math.PI;
-            this.x += L*Math.cos(phi);
-            this.y += L*Math.sin(phi);
+            x += L*Math.cos(phi);
+            y += L*Math.sin(phi);
+        }
+
+        public boolean isAtBoundary() {
+            return true;
         }
         
         public double getX() {
@@ -54,6 +63,10 @@ public class Model {
     
         public double getY() {
             return y;
+        }
+
+        public boolean isMovable() {
+            return isMovable;
         }
     }
 }
