@@ -36,7 +36,6 @@ public class View {
 
         paintPanel = new PaintPanel();
         paintPanel.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
-        //paintPanel.setBackground(Color.blue);
         paintPanel.setOpaque(false);
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, controlPanel, paintPanel);
@@ -51,7 +50,7 @@ public class View {
         frame.setVisible(true);
     }
     
-    private class PaintPanel extends JPanel {
+    class PaintPanel extends JPanel {
         PaintPanel() {
             super();
         }

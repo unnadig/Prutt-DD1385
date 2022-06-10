@@ -8,7 +8,21 @@ public class Model {
     public Model() {
         particleArray = new Particle[PARTICLE_NUMBER];
         for (int i = 0; i < particleArray.length; i++) {
-            particleArray[i] = new Particle();
+            
+            // Initialize coordinates from Gaussian
+            Random rx = new Random();
+            Random ry = new Random();
+            double x = 0.7 + rx.nextGaussian()/10;
+            double y = 0.5 + ry.nextGaussian()/10;
+            
+            try {
+                particleArray[i] = new Particle(x, y, true);
+            } catch (Exception e) {
+                //TODO: handle exception
+                particleArray[i] = new Particle(0.5, 0.5, true);
+                System.out.println(e.getMessage()+" Coordinates have been set to default.");
+            }
+            
         }
 
     }
@@ -31,19 +45,17 @@ public class Model {
         private boolean isMovable;
 
         public Particle(double x, double y, boolean isMovable) {
-            this.x = x;
-            this.y = y;
-            this.isMovable = isMovable;
+            if ((x < 0) || (x > 1) || (y < 0) || (y > 1)) {
+                throw new IllegalArgumentException("Assigned coordinates are out of bounds!");
+            } else {
+                this.x = x;
+                this.y = y;
+                this.isMovable = isMovable;
+            }
         }
     
         public Particle() {
-            // Initialize coordinates from Gaussian
-            Random rx = new Random();
-            Random ry = new Random();
-            // överlagra konstruktor
-            x = 0.5 + rx.nextGaussian()/10;
-            y = 0.5 + ry.nextGaussian()/10;
-            isMovable = true;
+            this(0.5, 0.5, true);
         }
     
         public void move(double L) {
