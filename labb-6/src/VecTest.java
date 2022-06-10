@@ -1,12 +1,20 @@
 import static org.junit.Assert.*;
 import java.util.ArrayList;
 
+import org.junit.Before;
 import org.junit.Test;
 
-public class SparseVectorTestB {
+public class VecTest {
+    
+    private ComparableElemVec<Integer> vec;
+
+    @Before 
+    public void setUp() {
+        vec = new ComparableElemVec<>();
+    }
+
     @Test
     public void testEmptyArray() {
-        ComparableElemVecMap<Integer> vec = new ComparableElemVecMap<Integer>();
         assertEquals(0, vec.size());
         assertEquals(-1, vec.minIndex());
         assertEquals(-1, vec.maxIndex());
@@ -19,7 +27,6 @@ public class SparseVectorTestB {
 
     @Test
     public void testSpecifiedAdd() {
-        ComparableElemVecMap<Integer> vec = new ComparableElemVecMap<>();
         vec.add(3,5);
         assertEquals(1, vec.size());
         vec.add(3,4);
@@ -36,7 +43,6 @@ public class SparseVectorTestB {
     
     @Test
     public void testUnspecifiedAdd() {
-        ComparableElemVecMap<Integer> vec = new ComparableElemVecMap<>();
         vec.add(5);
         assertEquals(1, vec.size());
         assertTrue(vec.get(0) == 5);
@@ -49,7 +55,6 @@ public class SparseVectorTestB {
     
     @Test
     public void testRemove() {
-        ComparableElemVecMap<Integer> vec = new ComparableElemVecMap<>();
         vec.add(5);
         vec.add(4);
         vec.add(5);

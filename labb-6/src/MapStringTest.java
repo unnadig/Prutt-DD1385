@@ -1,5 +1,5 @@
 import java.util.Arrays;
-public class SparseVectorStringTestB {
+public class MapStringTest {
     public static void main(String[] args) {
         ComparableElemVecMap<String> vec = new ComparableElemVecMap<>();
         vec.add("Fönster");
