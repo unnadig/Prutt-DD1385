@@ -12,8 +12,8 @@ public abstract class Human {
         return outString;
     }
 
-    void setGenderString(String genderStringIn) {
-        this.genderString = genderStringIn;
+    void setGenderString(String genderString) {
+        this.genderString = genderString;
     }
 
     String getName() {
